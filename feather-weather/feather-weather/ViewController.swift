@@ -22,6 +22,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var measurementLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var updateLocationInput: UITextField!
+    
     
     let owmApiKey = ""
     var activityIndicator: NVActivityIndicatorView!
@@ -31,6 +33,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        updateLocationInput.delegate = self
+        
+        
         let indicatorSize: CGFloat = 70
         let indicatorFrame = CGRect(x: (view.frame.width-indicatorSize/2), y: (view.frame.height-indicatorSize/2), width: indicatorSize, height: indicatorSize)
         activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .lineScale, color: UIColor.white, padding: 20.0)
@@ -80,5 +86,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
+    @IBAction func plusButton(_ sender: Any) {
+        locationLabel.text = updateLocationInput.text
+    }
 }
 
+extension ViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ updateLocationInput: UITextField) -> Bool {
+        updateLocationInput.resignFirstResponder()
+        return true
+    }
+}
